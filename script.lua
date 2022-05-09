@@ -36,6 +36,8 @@ local Window = library:AddWindow("MeepCracked", {
 	can_resize = true,
 })
 
+local Welcome = Window:AddTab("Welcome")
+Welcome:AddLabel("Thank you for using MeepCracked.")
 local Throwing = Window:AddTab("Throwing")
 local Action = Window:AddTab("Action Items")
 local Local = Window:AddTab("Local")
