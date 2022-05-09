@@ -7,4 +7,4 @@ local function ontp(s)
 end
 
 loadstring(game:HttpGet('https://raw.githubusercontent.com/synolope/meepcracked/main/script.lua'))()
-ontp("loadstring(game:HttpGet('https://raw.githubusercontent.com/synolope/meepcracked/main/loader.lua'))()")
+ontp("if not game:IsLoaded() then game.Loaded:Wait() end wait(1) loadstring(game:HttpGet('https://raw.githubusercontent.com/synolope/meepcracked/main/loader.lua'))()")
