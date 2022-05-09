@@ -209,6 +209,7 @@ Action:AddButton("Hand Item To All",function()
 			game.Players.LocalPlayer.VirtualWorldFunctions.RequestActionItem:Invoke(selectedaitem)
 			for i = 1,10,1 do
 				game:GetService("ReplicatedStorage").Connection:InvokeServer(301, player.UserId, selectedaitem)
+				wait()
 			end
 		end
 	end
