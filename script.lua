@@ -72,6 +72,13 @@ local Window = library:AddWindow(guiname, {
 	can_resize = true,
 })
 
+local ItemsWindow = library:AddWindow("Items", {
+	main_color = Color3.fromRGB(245, 117, 66),
+	min_size = Vector2.new(400, 400),
+	toggle_key = Enum.KeyCode.RightShift,
+	can_resize = true,
+})
+
 local Welcome = Window:AddTab("Welcome")
 Welcome:AddLabel("Thank you for using MeepCracked.")
 Welcome:AddButton("Join Our Discord Server",function()
@@ -122,8 +129,8 @@ Welcome:AddButton("Join Our Discord Server",function()
         spawn(DiscordInviteRequest)
     end
 end)
-local Throwing = Window:AddTab("Throwing")
-local Action = Window:AddTab("Action Items")
+local Throwing = ItemsWindow:AddTab("Throwing")
+local Action = ItemsWindow:AddTab("Action")
 local Local = Window:AddTab("Local")
 Local:AddLabel("( This is only for you. No one else can see these changes. )")
 
@@ -214,4 +221,5 @@ if isfile("meepcracked\\bgmusic.txt") then
 end
 
 Welcome:Show()
+Throwing:Show()
 library:FormatWindows()
