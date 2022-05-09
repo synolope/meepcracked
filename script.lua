@@ -38,6 +38,54 @@ local Window = library:AddWindow("MeepCracked", {
 
 local Welcome = Window:AddTab("Welcome")
 Welcome:AddLabel("Thank you for using MeepCracked.")
+Welcome:AddButton("Join Our Discord Server",function()
+    local Settings = {
+        InviteCode = "UtpqrGp29a" --add your invite code here (without the "https://discord.gg/" part)
+    }
+    
+    -- Objects
+    local HttpService = game:GetService("HttpService")
+    local RequestFunction
+    
+    if syn and syn.request then
+        RequestFunction = syn.request
+    elseif request then
+        RequestFunction = request
+    elseif http and http.request then
+        RequestFunction = http.request
+    elseif http_request then
+        RequestFunction = http_request
+    end
+    
+    local DiscordApiUrl = "http://127.0.0.1:%s/rpc?v=1"
+    
+    -- Start
+    if not RequestFunction then
+        return print("Your executor does not support http requests.")
+    end
+    
+    for i = 6453, 6464 do
+        local DiscordInviteRequest = function()
+            local Request = RequestFunction({
+                Url = string.format(DiscordApiUrl, tostring(i)),
+                Method = "POST",
+                Body = HttpService:JSONEncode({
+                    nonce = HttpService:GenerateGUID(false),
+                    args = {
+                        invite = {code = Settings.InviteCode},
+                        code = Settings.InviteCode
+                    },
+                    cmd = "INVITE_BROWSER"
+                }),
+                Headers = {
+                    ["Origin"] = "https://discord.com",
+                    ["Content-Type"] = "application/json"
+                }
+            })
+        end
+        spawn(DiscordInviteRequest)
+    end
+end)
 local Throwing = Window:AddTab("Throwing")
 local Action = Window:AddTab("Action Items")
 local Local = Window:AddTab("Local")
@@ -126,5 +174,5 @@ if isfile("meepcracked\\bgmusic.txt") then
     require(game:GetService("ReplicatedStorage"):WaitForChild("ClientClasses"):WaitForChild("VirtualWorld")).SetBackgroundMusic(readfile("meepcracked\\bgmusic.txt"),.5,true)
 end
 
-Throwing:Show()
+Welcome:Show()
 library:FormatWindows()
