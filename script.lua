@@ -131,6 +131,7 @@ Welcome:AddButton("Join Our Discord Server",function()
 end)
 local Throwing = ItemsWindow:AddTab("Throwing")
 local Action = ItemsWindow:AddTab("Action")
+local Toys = ItemsWindow:AddTab("Toys")
 local Local = Window:AddTab("Local")
 Local:AddLabel("( This is only for you. No one else can see these changes. )")
 
@@ -205,6 +206,31 @@ Action:AddSwitch("Spam Equip",loopwrap(function()
 		game.Players.LocalPlayer.VirtualWorldFunctions.RequestActionItem:Invoke(selectedaitem)
 	end
 end))
+
+local toyitems = {}
+
+local selectedtitem = nil
+
+for i,v in pairs(require(game.ReplicatedStorage.AssetList)) do
+	if v and v.ToyParentAssetId and v.AssetType == 12 then
+		toyitems[v.Title] = i
+	end
+end
+
+local Dropdown = Toys:AddDropdown("Toy Item", function(itemname)
+	selectedtitem = toyitems[itemname]
+end)
+
+for i,v in pairs(toyitems) do
+	Dropdown:Add(i)
+end
+
+Toys:AddButton("Equip Toy",function()
+	if selectedtitem then
+		print(selectedtitem)
+		require(game.ReplicatedStorage.ClientClasses.Toys).RequestToy(selectedtitem)
+	end
+end)
 
 Local:AddTextBox("Set World Background Music ID",function(id)
     if tonumber(id) then
