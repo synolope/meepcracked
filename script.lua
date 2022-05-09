@@ -319,7 +319,7 @@ end)
 
 hori:AddButton("Trump's Wall",function()
 	local s = "⬛"
-	NBox:Set(s .. "\n" .. string.rep(string.rep(s,60).."\n",60))
+	NBox:Set(s .. "\n" .. string.rep(string.rep(s,50).."\n",60))
 end)
 
 MName:AddButton("Set Meep Name (150 Coins)",function()
