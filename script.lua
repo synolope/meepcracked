@@ -330,6 +330,19 @@ Plant:AddButton("Plant Item",function()
 	end
 end)
 
+Plant:AddSwitch("Spam Plant Item",loopwrap(function()
+	if selectedpitem then
+		local LP = game.Players.LocalPlayer
+		local c = LP.Character
+		if c then
+			local root = c:FindFirstChild("HumanoidRootPart")
+			if root then
+				game:GetService("ReplicatedStorage").Connection:InvokeServer(344, selectedpitem, LP.Data.VirtualWorld.Value, root.Position)
+			end
+		end
+	end
+end),80)
+
 Welcome:Show()
 Throwing:Show()
 MName:Show()
