@@ -23,6 +23,12 @@ local function loopwrap(func,int)
 	end
 end
 
+local function checkdir()
+    if not isfolder("meepcracked") then
+        makefolder("meepcracked")
+    end
+end
+
 local Window = library:AddWindow("MeepCracked", {
 	main_color = Color3.fromRGB(245, 117, 66),
 	min_size = Vector2.new(500, 600),
@@ -33,6 +39,7 @@ local Window = library:AddWindow("MeepCracked", {
 local Throwing = Window:AddTab("Throwing")
 local Action = Window:AddTab("Action Items")
 local Local = Window:AddTab("Local")
+Local:AddLabel("( This is only for you. No one else can see these changes. )")
 
 local items = {
 	["Spitball"] = 1178,
@@ -102,6 +109,20 @@ Action:AddSwitch("Spam Equip",loopwrap(function()
 		game.Players.LocalPlayer.VirtualWorldFunctions.RequestActionItem:Invoke(selectedaitem)
 	end
 end))
+
+Local:AddTextBox("Set World Background Music ID",function(id)
+    if tonumber(id) then
+        checkdir()
+        writefile("meepcracked\\bgmusic.txt",id)
+        require(game:GetService("ReplicatedStorage").ClientClasses.VirtualWorld).SetBackgroundMusic(id,.5,true)
+    end
+end)
+
+checkdir()
+
+if isfile("meepcracked\\bgmusic.txt") then
+    require(game:GetService("ReplicatedStorage"):WaitForChild("ClientClasses"):WaitForChild("VirtualWorld")).SetBackgroundMusic(readfile("meepcracked\\bgmusic.txt"),.5,true)
+end
 
 Throwing:Show()
 library:FormatWindows()
