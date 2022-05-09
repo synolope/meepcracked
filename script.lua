@@ -203,6 +203,17 @@ Action:AddButton("Equip Item",function()
 	end
 end)
 
+Action:AddButton("Hand Item To All",function()
+	if selectedaitem then
+		for _,player in pairs(game.Players:GetPlayers()) do
+			game.Players.LocalPlayer.VirtualWorldFunctions.RequestActionItem:Invoke(selectedaitem)
+			for i = 1,10,1 do
+				game:GetService("ReplicatedStorage").Connection:InvokeServer(301, player.UserId, selectedaitem)
+			end
+		end
+	end
+end)
+
 Action:AddSwitch("Spam Equip",loopwrap(function()
 	if selectedaitem then
 		game.Players.LocalPlayer.VirtualWorldFunctions.RequestActionItem:Invoke(selectedaitem)
