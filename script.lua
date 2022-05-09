@@ -304,7 +304,7 @@ local plantitems = {}
 local selectedpitem = nil
 
 for i,v in pairs(require(game.ReplicatedStorage.AssetList)) do
-	if v.SpecialObjectType == 5 then
+	if v.SpecialObjectType == 5 or v.SpecialObjectType == 2 or v.SpecialObjectType == 6 then
 		plantitems[v.Title] = v.AssetId
 	end
 end
