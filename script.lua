@@ -203,7 +203,7 @@ Action:AddButton("Equip Item",function()
 	end
 end)
 
-Action:AddButton("Hand Item To All (Buggy And Only Works For Items You Can Hand To)",function()
+Action:AddButton("Hand Item To All (Buggy)",function()
 	if selectedaitem then
 		for _,player in pairs(game.Players:GetPlayers()) do
 			game.Players.LocalPlayer.VirtualWorldFunctions.RequestActionItem:Invoke(selectedaitem)
