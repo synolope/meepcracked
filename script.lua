@@ -58,7 +58,14 @@ local function checkdir()
     end
 end
 
-local Window = library:AddWindow("MeepCracked", {
+local guiname = "MeepCracked"
+
+if identifyexecutor then
+    guiname = guiname .. " - " .. identifyexecutor()
+    
+end
+
+local Window = library:AddWindow(guiname, {
 	main_color = Color3.fromRGB(245, 117, 66),
 	min_size = Vector2.new(500, 600),
 	toggle_key = Enum.KeyCode.RightShift,
@@ -151,7 +158,7 @@ local function throwall()
 	end
 end
 
-Throwing:AddButton("Throw At Closest Player",function()
+Throwing:AddButton("Throw At Clostest Player",function()
 	hit(getclosestplr())
 end)
 Throwing:AddButton("Throw At All Players",throwall)
