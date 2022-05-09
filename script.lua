@@ -81,6 +81,13 @@ local ItemsWindow = library:AddWindow("Items", {
 	can_resize = true,
 })
 
+local MeepWindow = library:AddWindow("Meep", {
+	main_color = clr,
+	min_size = Vector2.new(400, 400),
+	toggle_key = Enum.KeyCode.RightShift,
+	can_resize = true,
+})
+
 local Welcome = Window:AddTab("Welcome")
 Welcome:AddLabel("Thank you for using MeepCracked.")
 Welcome:AddButton("Join Our Discord Server",function()
@@ -260,6 +267,16 @@ if isfile("meepcracked\\bgmusic.txt") then
     require(game:GetService("ReplicatedStorage"):WaitForChild("ClientClasses"):WaitForChild("VirtualWorld")).SetBackgroundMusic(readfile("meepcracked\\bgmusic.txt"),.5,true)
 end
 
+local MName = MeepWindow:AddTab("Name")
+local NBox = MName:AddConsole({["source"]="Logs",["readonly"]=false})
+MName:AddButton("Set Meep Name (150 Coins)",function()
+	local text = NBox:Get()
+
+	game:GetService("ReplicatedStorage").Connection:InvokeServer(65, text)
+	game:GetService("ReplicatedStorage").Connection:InvokeServer(83)
+end)
+
 Welcome:Show()
 Throwing:Show()
+MName:Show()
 library:FormatWindows()

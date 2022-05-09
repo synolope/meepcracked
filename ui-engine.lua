@@ -1879,7 +1879,7 @@ function library:AddWindow(title, options)
 								highlight_lua("Text")
 								Source.Changed:Connect(highlight_lua)
 							elseif console_options.source == "Logs" then
-								Lines.Visible = false
+								Lines.Visible = true
 
 								highlight_logs("Text")
 								Source.Changed:Connect(highlight_logs)
