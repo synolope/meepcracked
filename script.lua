@@ -149,6 +149,7 @@ end)
 local Throwing = ItemsWindow:AddTab("Throwing")
 local Action = ItemsWindow:AddTab("Action")
 local Toys = ItemsWindow:AddTab("Toys")
+local Plant = ItemsWindow:AddTab("Plant")
 local Local = Window:AddTab("Local")
 Local:AddLabel("( This is only for you. No one else can see these changes. )")
 
@@ -296,6 +297,37 @@ Settings:AddButton("Reset UI Color",function()
 	checkdir()
 	writefile("meepcracked\\clr.txt",table.concat({clrp.R,clrp.G,clrp.B},";"))
 	dclrp:Set(clrp)
+end)
+
+local plantitems = {}
+
+local selectedpitem = nil
+
+for i,v in pairs(require(game.ReplicatedStorage.AssetList)) do
+	if v.SpecialObjectType == 5 then
+		plantitems[v.Title] = v.AssetId
+	end
+end
+
+local Dropdown = Plant:AddDropdown("Plant Item", function(itemname)
+	selectedpitem = plantitems[itemname]
+end)
+
+for i,v in pairs(plantitems) do
+	Dropdown:Add(i)
+end
+
+Plant:AddButton("Plant Item",function()
+	if selectedpitem then
+		local LP = game.Players.LocalPlayer
+		local c = LP.Character
+		if c then
+			local root = c:FindFirstChild("HumanoidRootPart")
+			if root then
+				game:GetService("ReplicatedStorage").Connection:InvokeServer(344, selectedpitem, LP.Data.VirtualWorld.Value, root.Position)
+			end
+		end
+	end
 end)
 
 Welcome:Show()
