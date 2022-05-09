@@ -65,16 +65,14 @@ if identifyexecutor then
     
 end
 
-local clr = math.random(1,4)
+local clr = Color3.fromRGB(142, 21, 212)
 
-if clr == 1 then
-	clr = Color3.fromRGB(142, 21, 212)
-elseif clr == 2 then
-	clr = Color3.fromRGB(212, 21, 88)
-elseif clr == 3 then
-	clr = Color3.fromRGB(21, 212, 81)
-elseif clr == 4 then
-	clr = Color3.fromRGB(21, 212, 164)
+checkdir()
+
+if isfile("meepcracked\\clr.txt") then
+    local R,G,B = unpack(readfile("meepcracked\\clr.txt"):split(";"))
+	R,G,B = tonumber(R),tonumber(G),tonumber(B)
+	clr = Color3.new(R,G,B)
 end
 
 local Window = library:AddWindow(guiname, {
@@ -284,6 +282,20 @@ MName:AddButton("Set Meep Name (150 Coins)",function()
 
 	game:GetService("ReplicatedStorage").Connection:InvokeServer(65, text)
 	game:GetService("ReplicatedStorage").Connection:InvokeServer(83)
+end)
+
+local Settings = Window:AddTab("Settings")
+Settings:AddLabel("UI Color (Restart Required)")
+local dclrp = Settings:AddColorPicker(function(clrp)
+	checkdir()
+	writefile("meepcracked\\clr.txt",table.concat({clrp.R,clrp.G,clrp.B},";"))
+end)
+dclrp:Set(clr)
+Settings:AddButton("Reset UI Color",function()
+	local clrp = Color3.fromRGB(142, 21, 212)
+	checkdir()
+	writefile("meepcracked\\clr.txt",table.concat({clrp.R,clrp.G,clrp.B},";"))
+	dclrp:Set(clrp)
 end)
 
 Welcome:Show()
