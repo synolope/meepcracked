@@ -67,7 +67,7 @@ end
 
 local Window = library:AddWindow(guiname, {
 	main_color = Color3.fromRGB(245, 117, 66),
-	min_size = Vector2.new(500, 600),
+	min_size = Vector2.new(400,400),
 	toggle_key = Enum.KeyCode.RightShift,
 	can_resize = true,
 })
