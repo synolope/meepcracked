@@ -281,12 +281,12 @@ local hori = MName:AddHorizontalAlignment()
 local NBox = MName:AddConsole({["source"]="Logs",["readonly"]=false})
 hori:AddButton("Nazi",function()
 	NBox:Set([[⬜⬜⬜⬜⬜⬜⬜
-	⬜⬛⬛⬛⬜⬛⬜
-	⬜⬜⬜⬛⬜⬛⬜
-	⬜⬛⬛⬛⬛⬛⬜
-	⬜⬛⬜⬛⬜⬜⬜
-	⬜⬛⬜⬛⬛⬛⬜
-	⬜⬜⬜⬜⬜⬜⬜]])
+⬜⬛⬛⬛⬜⬛⬜
+⬜⬜⬜⬛⬜⬛⬜
+⬜⬛⬛⬛⬛⬛⬜
+⬜⬛⬜⬛⬜⬜⬜
+⬜⬛⬜⬛⬛⬛⬜
+⬜⬜⬜⬜⬜⬜⬜]])
 end)
 MName:AddButton("Set Meep Name (150 Coins)",function()
 	local text = NBox:Get()
