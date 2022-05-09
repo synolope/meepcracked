@@ -65,7 +65,17 @@ if identifyexecutor then
     
 end
 
-local clr = Color3.fromRGB(142, 21, 212)
+local clr = math.random(1,4)
+
+if clr == 1 then
+	clr = Color3.fromRGB(142, 21, 212)
+elseif clr == 2 then
+	clr = Color3.fromRGB(212, 21, 88)
+elseif clr == 3 then
+	clr = Color3.fromRGB(21, 212, 81)
+elseif clr == 4 then
+	clr = Color3.fromRGB(21, 212, 164)
+end
 
 local Window = library:AddWindow(guiname, {
 	main_color = clr,
