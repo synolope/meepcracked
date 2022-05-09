@@ -12,7 +12,7 @@ local ui_options = {
 }
 
 do
-	local imgui = game:GetService("CoreGui"):FindFirstChild("imgui")
+	local imgui = game:GetService("CoreGui"):FindFirstChild("imgui2")
 	if imgui then imgui:Destroy() end
 end
 
@@ -89,7 +89,7 @@ local Input = Instance.new("TextButton")
 local Input_Roundify_4px = Instance.new("ImageLabel")
 local Windows = Instance.new("Frame")
 
-imgui.Name = "imgui"
+imgui.Name = "imgui2"
 imgui.Parent = game:GetService("CoreGui")
 
 Prefabs.Name = "Prefabs"
