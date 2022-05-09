@@ -294,6 +294,29 @@ hori:AddButton("Penis",function()
                   ⬛⬛⬛⬛⬛⬛⬛D
 ⬛⬛]])
 end)
+
+hori:AddButton("Dildo",function()
+	NBox:Set([[⬛
+⬛⬛
+⬛⬛
+⬛⬛
+⬛⬛
+⬛⬛
+⬛⬛
+⬛⬛
+⬛⬛
+⬛⬛
+⬛⬛
+⬛⬛
+⬛⬛
+⬛⬛
+⬛⬛
+⬛⬛⬛
+⬛⬛⬛⬛⬛⬛
+⬛⬛⬛⬛⬛⬛
+⬛⬛⬛⬛⬛⬛]])
+end)
+
 MName:AddButton("Set Meep Name (150 Coins)",function()
 	local text = NBox:Get()
 
