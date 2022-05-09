@@ -23,6 +23,35 @@ local function loopwrap(func,int)
 	end
 end
 
+local function getclosestplr()
+	local LP = game.Players.LocalPlayer
+	local c = LP.Character
+
+	local closedist = nil
+	local closeplr = nil
+	if c then
+		local root = c:FindFirstChild("HumanoidRootPart")
+		if root then
+			for _,plr in pairs(game.Players:GetPlayers()) do
+			    if plr ~= LP then 
+				local pc = plr.Character
+				if pc then
+					local proot = pc:FindFirstChild("HumanoidRootPart")
+					if proot then
+						local dist = (root.Position - proot.Position).Magnitude
+						if not closedist or dist < closedist then
+							closedist = dist
+							closeplr = plr
+						end
+					end
+				end
+				end
+			end
+		end
+	end
+	return closeplr
+end
+
 local function checkdir()
     if not isfolder("meepcracked") then
         makefolder("meepcracked")
@@ -122,6 +151,9 @@ local function throwall()
 	end
 end
 
+Throwing:AddButton("Throw At Closest Player",function()
+	hit(getclosestplr())
+end)
 Throwing:AddButton("Throw At All Players",throwall)
 Throwing:AddSwitch("Loop Throw At All Players",loopwrap(throwall,10))
 
