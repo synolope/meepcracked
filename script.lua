@@ -317,10 +317,33 @@ hori:AddButton("Dildo",function()
 ⬛⬛⬛⬛⬛⬛]])
 end)
 
-hori:AddButton("Trump's Wall",function()
-	local s = "⬛"
-	NBox:Set(s .. "\n" .. string.rep(string.rep(s,50).."\n",60))
+hori:AddButton("Fuck",function()
+	NBox:Set([[          ⬛⬛⬛⬛
+	⬛
+			  ⬛⬛⬛⬛
+	⬛
+	⬛
+	
+			  ⬛    ⬛
+			  ⬛    ⬛
+			  ⬛    ⬛
+			  ⬛    ⬛
+			  ⬛⬛⬛
+	
+			  ⬛⬛⬛⬛
+	⬛
+	⬛
+	⬛
+			  ⬛⬛⬛⬛
+	
+		⬛    ⬛
+	  ⬛  ⬛
+	⬛⬛
+	  ⬛  ⬛
+		⬛    ⬛]])
 end)
+
+
 
 MName:AddButton("Set Meep Name (150 Coins)",function()
 	local text = NBox:Get()
