@@ -276,6 +276,7 @@ if isfile("meepcracked\\bgmusic.txt") then
     require(game:GetService("ReplicatedStorage"):WaitForChild("ClientClasses"):WaitForChild("VirtualWorld")).SetBackgroundMusic(readfile("meepcracked\\bgmusic.txt"),.5,true)
 end
 
+local MMain = MeepWindow:AddTab("Main")
 local MName = MeepWindow:AddTab("Name")
 local hori = MName:AddHorizontalAlignment()
 local NBox = MName:AddConsole({["source"]="Logs",["readonly"]=false})
@@ -321,7 +322,9 @@ hori:AddButton("Fuck",function()
 	NBox:Set(game:HttpGet("https://raw.githubusercontent.com/synolope/meepcracked/main/art/f.txt"))
 end)
 
-
+MMain:AddButton("Toggle Meep",function()
+	game:GetService("ReplicatedStorage").Connection:InvokeServer(79)
+end)
 
 MName:AddButton("Set Meep Name (150 Coins)",function()
 	local text = NBox:Get()
@@ -390,5 +393,5 @@ end),80)
 
 Welcome:Show()
 Throwing:Show()
-MName:Show()
+MMain:Show()
 library:FormatWindows()
