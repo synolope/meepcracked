@@ -96,6 +96,13 @@ local MeepWindow = library:AddWindow("Meep", {
 	can_resize = true,
 })
 
+local ServerDWindow = library:AddWindow("Server Destroying", {
+	main_color = clr,
+	min_size = Vector2.new(400, 400),
+	toggle_key = Enum.KeyCode.RightShift,
+	can_resize = true,
+})
+
 local Welcome = Window:AddTab("Welcome")
 Welcome:AddLabel("Thank you for using MeepCracked.")
 Welcome:AddButton("Join Our Discord Server",function()
@@ -394,7 +401,16 @@ Plant:AddSwitch("Spam Plant Item",loopwrap(function()
 	end
 end),80)
 
+local Annoyance = ServerDWindow:AddTab("Annoyance")
+Annoyance:AddSwitch("Spam Fireworks",loopwrap(function()
+	game:GetService("ReplicatedStorage").Connection:InvokeServer(201, 1310, {})
+	game:GetService("ReplicatedStorage").ConnectionEvent:FireServer(210)
+	game:GetService("ReplicatedStorage").Connection:InvokeServer(202, 1310)
+end))
+
+
 Welcome:Show()
 Throwing:Show()
 MMain:Show()
+Annoyance:Show()
 library:FormatWindows()
