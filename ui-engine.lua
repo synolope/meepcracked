@@ -1871,6 +1871,11 @@ function library:AddWindow(title, options)
 										lin = lin + 1
 									end)
 
+									Lines.Text = ""
+									for i = 1, lin do
+										Lines.Text = Lines.Text .. i .. "\n"
+									end
+
 									sf.CanvasSize = UDim2.new(0, 0, lin * 0.153846154, 0)
 								end
 							end
