@@ -421,7 +421,7 @@ Annoyance:AddSwitch("Spam Teleport Notification",loopwrap(function()
 	end
 end,5))
 
-Annoyance:AddButton("Load Fling Script (USE ONCE & BREAKS CHARACTER)",function()
+Annoyance:AddButton("Load Fling Script (Buggy & Breaks)",function()
 	local LP = game:GetService("Players").LocalPlayer
 
 local function align(part0,part1)
