@@ -77,31 +77,59 @@ end
 
 local Window = library:AddWindow(guiname, {
 	main_color = clr,
-	min_size = Vector2.new(400,400),
+	min_size = Vector2.new(300,300),
 	toggle_key = Enum.KeyCode.RightShift,
 	can_resize = true,
 })
 
 local ItemsWindow = library:AddWindow("Items", {
 	main_color = clr,
-	min_size = Vector2.new(400, 400),
+	min_size = Vector2.new(300, 300),
 	toggle_key = Enum.KeyCode.RightShift,
 	can_resize = true,
 })
 
 local MeepWindow = library:AddWindow("Meep", {
 	main_color = clr,
-	min_size = Vector2.new(400, 400),
+	min_size = Vector2.new(300, 300),
 	toggle_key = Enum.KeyCode.RightShift,
 	can_resize = true,
 })
 
 local ServerDWindow = library:AddWindow("Server Destroying", {
 	main_color = clr,
-	min_size = Vector2.new(400, 400),
+	min_size = Vector2.new(300, 300),
 	toggle_key = Enum.KeyCode.RightShift,
 	can_resize = true,
 })
+
+local CoinsWindow = library:AddWindow("Coins", {
+	main_color = clr,
+	min_size = Vector2.new(300, 300),
+	toggle_key = Enum.KeyCode.RightShift,
+	can_resize = true,
+})
+
+local LogsWindow = library:AddWindow("Logs", {
+	main_color = clr,
+	min_size = Vector2.new(300, 300),
+	toggle_key = Enum.KeyCode.RightShift,
+	can_resize = true,
+})
+
+local Output = LogsWindow:AddTab("Output")
+
+local outlog = Output:AddConsole({
+	["full"] = true,
+	["source"] = "Logs",
+	readonly = true
+})
+
+local function log(str)
+	outlog:Log(str)
+end
+
+Output:Show()
 
 local Welcome = Window:AddTab("Welcome")
 Welcome:AddLabel("Thank you for using MeepCracked.")
@@ -508,9 +536,95 @@ wait(1)
 loadcharacter(LP.Character)
 end)
 
+local Fishing = CoinsWindow:AddTab("Fishing")
 
+local function checkworld()
+	return workspace.Worlds:FindFirstChild("1") ~= nil and workspace.Worlds:FindFirstChild("1"):FindFirstChild("PGStuff") ~= nil
+end
+
+local function leavedoc()
+	game:GetService("ReplicatedStorage").Connection:InvokeServer(11, {
+		["Power"] = 129.87686476043376,
+		["FishingZonePos"] = Vector3.new(),
+		["Face"] = Vector3.new(),
+		["PlayerPos"] = Vector3.new(),
+		["FishingPolePos"] = Vector3.new()
+	})
+
+	game:GetService("ReplicatedStorage").ConnectionEvent:FireServer(12)
+end
+
+local function sellfish()
+	game:GetService("ReplicatedStorage").Connection:InvokeServer(51)
+end
+
+local deb = false
+
+Fishing:AddSwitch("Auto Farm (Buggy)",loopwrap(function()
+	if not deb then
+		deb = true
+		if checkworld() then
+			leavedoc()
+			sellfish()
+			log("Searching for fishing dock...")
+			for _,v in pairs(workspace.Worlds["1"].PGStuff:GetChildren()) do
+				if v.Name == "FishDockObject" and v:FindFirstChild("PlayerStand") and v.PlayerStand:FindFirstChild("DockId") then
+					local w = game:GetService("ReplicatedStorage").Connection:InvokeServer(9, v.PlayerStand.DockId.Value)
+					if w then
+						log("Using Dock " .. tostring(v.PlayerStand.DockId.Value))
+						break
+					end
+				end
+			end
+
+			game:GetService("ReplicatedStorage").Connection:InvokeServer(11, {
+				["Power"] = 129.87686476043376,
+				["FishingZonePos"] = Vector3.new(),
+				["Face"] = Vector3.new(),
+				["PlayerPos"] = Vector3.new(),
+				["FishingPolePos"] = Vector3.new()
+			})
+
+			log("Casted rod")
+
+			log("Filling bucket...")
+
+			local function getfish()
+				wait(1)
+				game:GetService("ReplicatedStorage").ConnectionEvent:FireServer(10)
+				game:GetService("ReplicatedStorage").Connection:InvokeServer(49)
+			end
+
+			while #game:GetService("ReplicatedStorage").Connection:InvokeServer(50) < 20 do
+				getfish()
+				local fisham = #game:GetService("ReplicatedStorage").Connection:InvokeServer(50)
+				log(fisham)
+			end
+
+			game:GetService("ReplicatedStorage").ConnectionEvent:FireServer(10)
+
+			log("Filled bucket")
+
+			wait(1)
+
+			leavedoc()
+
+			wait(2)
+
+			deb = false
+
+		else
+			log("Please make sure you are at the Playground")
+		end
+		
+	end
+end))
+
+Fishing:Show()
 Welcome:Show()
 Throwing:Show()
 MMain:Show()
 Annoyance:Show()
 library:FormatWindows()
+
+log("MeepCracked Loaded")
