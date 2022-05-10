@@ -1862,6 +1862,7 @@ function library:AddWindow(title, options)
 								if type == "Text" then
 									Source.Text = Source.Text:gsub("\13", "")
 									Source.Text = Source.Text:gsub("\t", "      ")
+									Source.TextWrapped = false
 									local s = Source.Text
 
 									Source.Info.Text = info(s)
