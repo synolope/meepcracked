@@ -408,6 +408,12 @@ Annoyance:AddSwitch("Spam Fireworks",loopwrap(function()
 	game:GetService("ReplicatedStorage").Connection:InvokeServer(202, 1310)
 end))
 
+Annoyance:AddSwitch("Spam Teleport Notification",loopwrap(function()
+	for _, player in pairs(game.Players:GetPlayers()) do
+		game:GetService("ReplicatedStorage").Connection:InvokeServer(154,player.UserId,{})
+	end
+end,5))
+
 
 Welcome:Show()
 Throwing:Show()
