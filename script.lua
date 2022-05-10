@@ -415,7 +415,7 @@ Annoyance:AddSwitch("Spam Balloons",loopwrap(function()
 	game:GetService("ReplicatedStorage").Connection:InvokeServer(202)
 end,20))
 
-Local:AddButton("Fix Holding Hand",function()
+Local:AddButton("Fix Item Spam",function()
 	repeat
 		local m = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Model")
 		if m then m:Destroy() end
