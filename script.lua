@@ -421,6 +421,85 @@ Annoyance:AddSwitch("Spam Teleport Notification",loopwrap(function()
 	end
 end,5))
 
+Annoyance:AddButton("Load Fling Script (USE ONCE)",function()
+	local LP = game:GetService("Players").LocalPlayer
+
+local function align(part0,part1)
+	local attachment0 = Instance.new("Attachment",part1)
+	local attachment1 = Instance.new("Attachment",part0)
+	
+	local alignpos = Instance.new("AlignPosition",part0)
+	alignpos.MaxForce = math.huge
+	alignpos.Responsiveness = 200
+	alignpos.Attachment0 = attachment0
+	alignpos.Attachment1 = attachment1
+end
+
+local function fling(part0)
+	local vel = Instance.new("BodyAngularVelocity",part0)
+	vel.AngularVelocity = Vector3.new(1,1,1)*999
+	vel.MaxTorque = Vector3.new(1,1,1)*9999
+end
+
+local function loadcharacter(character)
+	local scf = character.HumanoidRootPart.CFrame
+	character.HumanoidRootPart.CFrame = scf*CFrame.new(0,100,0)
+	character.HumanoidRootPart.Anchored = true
+
+	wait(1)
+
+	local fakec = Instance.new("Model",workspace)
+	
+	local froot = Instance.new("Part",fakec)
+	froot.Name = "HumanoidRootPart"
+	froot.Size = Vector3.new(1,5,1)
+	froot.CFrame = scf
+	froot.Transparency = 0.5
+	
+	Instance.new("Humanoid",fakec)
+	
+	LP.Character = fakec
+	workspace.CurrentCamera.CameraSubject = fakec.Humanoid
+	
+	align(froot,character.HumanoidRootPart)
+	
+	character.Humanoid:Destroy()
+
+	for _,p in pairs(character:GetDescendants()) do
+		if p:IsA("BasePart") then
+			p.CanCollide = false
+			p.Massless = true
+		elseif p:IsA("BodyGyro") or p:IsA("BodyAngularVelocity") or p:IsA("BodyVelocity") then
+			p:Destroy()
+		end
+	end
+	
+	game.RunService.Heartbeat:Connect(function()
+		for _,p in pairs(character:GetDescendants()) do
+		if p:IsA("BasePart") then
+			p.CanCollide = false
+			p.Massless = true
+			p.Anchored = false
+		elseif p:IsA("Weld")then
+			p.Enabled = false
+		end
+	end
+	end)
+
+	
+	wait()
+	
+	wait(1)
+	fling(character.HumanoidRootPart)
+end
+
+game:GetService("ReplicatedStorage").Connection:InvokeServer(332)
+
+wait(1)
+
+loadcharacter(LP.Character)
+end)
+
 
 Welcome:Show()
 Throwing:Show()
