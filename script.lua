@@ -415,6 +415,14 @@ Annoyance:AddSwitch("Spam Balloons",loopwrap(function()
 	game:GetService("ReplicatedStorage").Connection:InvokeServer(202)
 end,20))
 
+Local:AddButton("Fix Holding Hand",function()
+	repeat
+		local m = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Model")
+		if m then m:Destroy() end
+	until  game.Players.LocalPlayer.Character:FindFirstChildOfClass("Model") == nil
+	game:GetService("ReplicatedStorage").Connection:InvokeServer(202)
+end)
+
 Annoyance:AddSwitch("Spam Teleport Notification",loopwrap(function()
 	for _, player in pairs(game.Players:GetPlayers()) do
 		game:GetService("ReplicatedStorage").Connection:InvokeServer(154,player.UserId,{})
