@@ -399,14 +399,21 @@ Plant:AddSwitch("Spam Plant Item",loopwrap(function()
 			end
 		end
 	end
-end),80)
+end,20))
 
 local Annoyance = ServerDWindow:AddTab("Annoyance")
+
 Annoyance:AddSwitch("Spam Fireworks",loopwrap(function()
 	game:GetService("ReplicatedStorage").Connection:InvokeServer(201, 1310, {})
 	game:GetService("ReplicatedStorage").ConnectionEvent:FireServer(210)
 	game:GetService("ReplicatedStorage").Connection:InvokeServer(202, 1310)
 end))
+
+Annoyance:AddSwitch("Spam Balloons",loopwrap(function()
+    game:GetService("ReplicatedStorage").Connection:InvokeServer(202)
+	game:GetService("ReplicatedStorage").Connection:InvokeServer(201, 1312, {})
+	game:GetService("ReplicatedStorage").Connection:InvokeServer(202)
+end,20))
 
 Annoyance:AddSwitch("Spam Teleport Notification",loopwrap(function()
 	for _, player in pairs(game.Players:GetPlayers()) do
