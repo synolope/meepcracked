@@ -318,29 +318,7 @@ hori:AddButton("Dildo",function()
 end)
 
 hori:AddButton("Fuck",function()
-	NBox:Set([[          ⬛⬛⬛⬛
-	⬛
-			  ⬛⬛⬛⬛
-	⬛
-	⬛
-	
-			  ⬛    ⬛
-			  ⬛    ⬛
-			  ⬛    ⬛
-			  ⬛    ⬛
-			  ⬛⬛⬛
-	
-			  ⬛⬛⬛⬛
-	⬛
-	⬛
-	⬛
-			  ⬛⬛⬛⬛
-	
-		⬛    ⬛
-	  ⬛  ⬛
-	⬛⬛
-	  ⬛  ⬛
-		⬛    ⬛]])
+	NBox:Set(game:HttpGet("https://raw.githubusercontent.com/synolope/meepcracked/main/art/f.txt"))
 end)
 
 
