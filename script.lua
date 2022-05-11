@@ -158,7 +158,6 @@ local Action = ItemsWindow:AddTab("Action")
 local Toys = ItemsWindow:AddTab("Toys")
 local Plant = ItemsWindow:AddTab("Plant")
 local Local = Window:AddTab("Local")
-local Gamepasses = Window:AddTab("Gamepasses")
 Local:AddLabel("( This is only for you. No one else can see these changes. )")
 
 local items = {
