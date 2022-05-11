@@ -203,9 +203,9 @@ end,10))
 
 local fgs = Local:AddSwitch("Free Gamepasses",function(b)
 	checkdir()
-	writefile("meepcracked\\freegamepasses.txt",b)
-	game.Players.LocalPlayer:SetAttribute("PLUS",true)
-	game.Players.LocalPlayer:SetAttribute("BoomBox",true)
+	writefile("meepcracked\\freegamepasses.txt",tostring(b))
+	game.Players.LocalPlayer:SetAttribute("PLUS",b)
+	game.Players.LocalPlayer:SetAttribute("BoomBox",b)
 end)
 
 if isfile("meepcracked\\freegamepasses.txt") and readfile("meepcracked\\freegamepasses.txt") == "true" then
