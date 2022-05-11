@@ -158,6 +158,7 @@ local Action = ItemsWindow:AddTab("Action")
 local Toys = ItemsWindow:AddTab("Toys")
 local Plant = ItemsWindow:AddTab("Plant")
 local Local = Window:AddTab("Local")
+local Gamepasses = Window:AddTab("Gamepasses")
 Local:AddLabel("( This is only for you. No one else can see these changes. )")
 
 local items = {
@@ -199,6 +200,17 @@ Throwing:AddSwitch("Loop Throw At All Players",loopwrap(throwall,10))
 Throwing:AddSwitch("Loop Throw At You",loopwrap(function()
 	hit(game.Players.LocalPlayer)
 end,10))
+
+local fgs = Local:AddSwitch("Free Gamepasses",function(b)
+	checkdir()
+	writefile("meepcracked\\freegamepasses.txt",b)
+	game.Players.LocalPlayer:SetAttribute("PLUS",true)
+	game.Players.LocalPlayer:SetAttribute("BoomBox",true)
+end)
+
+if isfile("meepcracked\\freegamepasses.txt") and readfile("meepcracked\\freegamepasses.txt") == "true" then
+	fgs:Set(true)
+end
 
 Local:AddSwitch("Anti Snowball Screen",loopwrap(function()
 	local t = require(game.Players.LocalPlayer.PlayerGui:WaitForChild("ThrowingItemGui"):WaitForChild("ThrowingItemGUI"))
