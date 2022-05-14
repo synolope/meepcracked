@@ -516,6 +516,7 @@ local function begincselect()
 		local mouse = game.Players.LocalPlayer:GetMouse()
 
 		local selection = Instance.new("SelectionBox")
+		selection.Color3 = WindowOptions.main_color
 
 		local st = nil
 		local schar = nil
