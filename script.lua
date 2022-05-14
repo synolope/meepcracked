@@ -634,6 +634,39 @@ hori:AddButton("Save Avatar",function()
 	end
 end)
 
+local Presets = AvatarWindow:AddTab("Presets")
+
+local apre = {
+	{
+		Title = "Glitched Avatar",
+		Data = (function()
+			local jacketnum = 28
+
+			local payload = {}
+			payload.AccessoryBlob = {}
+
+			for i,v in pairs(game:GetService("HttpService"):JSONDecode(game:HttpGet("https://catalog.roblox.com/v1/search/items?category=Clothing&limit=" .. tostring(jacketnum) .. "&subcategory=JacketAccessories")).data) do
+			    table.insert(payload.AccessoryBlob,{
+			        AssetId = v.id,
+			        AccessoryType = "Jacket",
+			        Order = math.huge,
+			        Puffiness = math.huge
+			    })
+			end
+
+			return payload
+		end)()
+	}
+}
+
+for _,preset in pairs(apre) do
+	Presets:AddLabel(preset.Title)
+	local hori = Presets:AddHorizontalAlignment()
+	hori:AddButton("Load Avatar",function()
+		game:GetService("ReplicatedStorage").ConnectionEvent:FireServer(315,Presets.Data,true)
+	end)
+end
+
 Welcome:Show()
 Throwing:Show()
 MMain:Show()
