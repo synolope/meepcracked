@@ -71,37 +71,20 @@ checkdir()
 
 if isfile("meepcracked\\clr.txt") then
     local R,G,B = unpack(readfile("meepcracked\\clr.txt"):split(";"))
-	R,G,B = tonumber(R),tonumber(G),tonumber(B)
-	clr = Color3.new(R,G,B)
+    R,G,B = tonumber(R),tonumber(G),tonumber(B)
+    clr = Color3.new(R,G,B)
 end
 
-local Window = library:AddWindow(guiname, {
-	main_color = clr,
-	min_size = Vector2.new(400,400),
-	toggle_key = Enum.KeyCode.RightShift,
-	can_resize = true,
-})
-
-local ItemsWindow = library:AddWindow("Items", {
-	main_color = clr,
-	min_size = Vector2.new(400, 400),
-	toggle_key = Enum.KeyCode.RightShift,
-	can_resize = true,
-})
-
-local MeepWindow = library:AddWindow("Meep", {
-	main_color = clr,
-	min_size = Vector2.new(400, 400),
-	toggle_key = Enum.KeyCode.RightShift,
-	can_resize = true,
-})
-
-local ServerDWindow = library:AddWindow("Server Destroying", {
-	main_color = clr,
-	min_size = Vector2.new(400, 400),
-	toggle_key = Enum.KeyCode.RightShift,
-	can_resize = true,
-})
+local WindowOptions = {
+    main_color = clr,
+    min_size = Vector2.new(400, 400),
+    toggle_key = Enum.KeyCode.RightShift,
+    can_resize = true,
+}
+local Window = library:AddWindow(guiname, WindowOptions)
+local ItemsWindow = library:AddWindow("Items", WindowOptions)
+local MeepWindow = library:AddWindow("Meep", WindowOptions)
+local ServerDWindow = library:AddWindow("Server Destroying", WindowOptions)
 
 local Welcome = Window:AddTab("Welcome")
 Welcome:AddLabel("Thank you for using MeepCracked.")
@@ -355,17 +338,20 @@ MName:AddButton("Set Meep Name (150 Coins)",function()
 end)
 
 local Settings = Window:AddTab("Settings")
-Settings:AddLabel("UI Color (Restart Required)")
+Settings:AddLabel("UI Color")
 local dclrp = Settings:AddColorPicker(function(clrp)
-	checkdir()
-	writefile("meepcracked\\clr.txt",table.concat({clrp.R,clrp.G,clrp.B},";"))
+    checkdir()
+    writefile("meepcracked\\clr.txt",table.concat({clrp.R,clrp.G,clrp.B},";"))
+    WindowOptions.main_color = clrp
 end)
 dclrp:Set(clr)
+WindowOptions.main_color = clr
 Settings:AddButton("Reset UI Color",function()
-	local clrp = Color3.fromRGB(142, 21, 212)
-	checkdir()
-	writefile("meepcracked\\clr.txt",table.concat({clrp.R,clrp.G,clrp.B},";"))
-	dclrp:Set(clrp)
+    local clrp = Color3.fromRGB(142, 21, 212)
+    checkdir()
+    writefile("meepcracked\\clr.txt",table.concat({clrp.R,clrp.G,clrp.B},";"))
+    dclrp:Set(clrp)
+    WindowOptions.main_color = clrp
 end)
 
 local plantitems = {}
