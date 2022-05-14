@@ -77,7 +77,7 @@ end
 
 local WindowOptions = {
     main_color = clr,
-    min_size = Vector2.new(400, 400),
+    min_size = Vector2.new(300, 400),
     toggle_key = Enum.KeyCode.RightShift,
     can_resize = true,
 }
@@ -85,6 +85,7 @@ local Window = library:AddWindow(guiname, WindowOptions)
 local ItemsWindow = library:AddWindow("Items", WindowOptions)
 local MeepWindow = library:AddWindow("Meep", WindowOptions)
 local ServerDWindow = library:AddWindow("Server Destroying", WindowOptions)
+local AvatarWindow = library:AddWindow("Avatar", WindowOptions)
 
 local Welcome = Window:AddTab("Welcome")
 Welcome:AddLabel("Thank you for using MeepCracked.")
@@ -505,9 +506,136 @@ wait(1)
 loadcharacter(LP.Character)
 end)
 
+local Cloner = AvatarWindow:AddTab("Cloner")
+
+local sdo = false
+
+local function begincselect()
+	if not sdo then
+		sdo = true
+		local mouse = game.Players.LocalPlayer:GetMouse()
+
+		local selection = Instance.new("SelectionBox")
+
+		local st = nil
+		local schar = nil
+		local r = false
+
+		local selecting = game:GetService("RunService").RenderStepped:Connect(function()
+			local target = mouse.Target
+			if target ~= st then
+				if target and target:FindFirstAncestorOfClass("Model") and target:FindFirstAncestorOfClass("Model"):FindFirstChildOfClass("Humanoid") and target:FindFirstAncestorOfClass("Model"):FindFirstChildOfClass("Humanoid"):FindFirstChildOfClass("HumanoidDescription") and target:FindFirstAncestorOfClass("Model"):FindFirstChild("HumanoidRootPart") then
+					local char = target:FindFirstAncestorOfClass("Model")
+					selection.Parent = char.HumanoidRootPart
+					selection.Adornee = char.HumanoidRootPart
+				else
+					selection.Parent = nil
+					selection.Adornee = nil
+				end
+				st = target
+			end
+		end)
+
+		local m
+		m = mouse.Button1Down:Connect(function()
+			selecting:Disconnect()
+			selection:Destroy()
+			local target = st
+			if target and target:FindFirstAncestorOfClass("Model") and target:FindFirstAncestorOfClass("Model"):FindFirstChildOfClass("Humanoid") and target:FindFirstAncestorOfClass("Model"):FindFirstChildOfClass("Humanoid"):FindFirstChildOfClass("HumanoidDescription") and target:FindFirstAncestorOfClass("Model"):FindFirstChild("HumanoidRootPart") then
+				local char = target:FindFirstAncestorOfClass("Model")
+				schar = char
+				r = true
+			else
+				schar = nil
+				r = true
+			end
+			m:Disconnect()
+		end)
+
+		repeat wait() until r
+		sdo = false
+		return schar
+	end
+end
+
+local schar = nil
+
+local cn
+
+Cloner:AddButton("Select Character",function()
+	local char = begincselect()
+	schar = char
+	if char then
+		cn.Text = char.Name
+	end
+end)
+
+cn = Cloner:AddLabel("Character Name")
+
+local function colorToTable(clr) return {tostring(clr.R*255),tostring(clr.G*255),tostring(clr.B*255)} end
+
+
+local function ExtractData(humdes)
+	local ava = {}
+
+	for _,v in pairs({"WidthScale", "HeadScale","HeightScale","DepthScale","BodyTypeScale","ProportionScale"}) do
+		ava[v] = humdes[v]
+	end
+
+	for _,v in pairs({"Face","Head","LeftArm","RightArm","LeftLeg","RightLeg","Torso"}) do
+		ava[v] = humdes[v]
+	end
+
+	for _,v in pairs({"HeadColor","LeftArmColor","RightArmColor","LeftLegColor","RightLegColor","TorsoColor"}) do
+		ava[v] = colorToTable(humdes[v])
+	end
+
+	for _,v in pairs({"GraphicTShirt","Shirt","Pants"}) do
+		ava[v] = humdes[v]
+	end
+
+	for _,v in pairs({"ClimbAnimation","FallAnimation","IdleAnimation","JumpAnimation","RunAnimation","SwimAnimation","WalkAnimation"}) do
+		ava[v] = humdes[v]
+	end
+
+
+	for _,v in pairs({"Hat","Hair","Back","Face","Front","Neck","Shoulders","Waist"}) do
+		ava[v .. "Accessory"] = humdes[v .. "Accessory"]
+	end
+	ava.Emotes = humdes:GetEmotes()
+
+	local layered = humdes:GetAccessories(false)
+
+	for i,v in pairs(layered) do
+		if v.AccessoryType and typeof(v.AccessoryType) == "EnumItem" then
+			v.AccessoryType = v.AccessoryType.Name
+		end
+	end
+
+	ava.AccessoryBlob = layered
+
+	return ava
+end
+
+local hori = Cloner:AddHorizontalAlignment()
+hori:AddButton("Load Avatar",function()
+	if schar and schar.Parent and schar:FindFirstChildOfClass("Humanoid") and schar:FindFirstChildOfClass("Humanoid"):FindFirstChildOfClass("HumanoidDescription") then
+		local data = ExtractData(schar:FindFirstChildOfClass("Humanoid"):FindFirstChildOfClass("HumanoidDescription"))
+		game:GetService("ReplicatedStorage").ConnectionEvent:FireServer(315,data,true)
+	end
+end)
+
+hori:AddButton("Save Avatar",function()
+	if schar and schar.Parent and schar:FindFirstChildOfClass("Humanoid") and schar:FindFirstChildOfClass("Humanoid"):FindFirstChildOfClass("HumanoidDescription") then
+		local data = ExtractData(schar:FindFirstChildOfClass("Humanoid"):FindFirstChildOfClass("HumanoidDescription"))
+		game:GetService("ReplicatedStorage").Connection:InvokeServer(65,"CLONE")
+		game:GetService("ReplicatedStorage").Connection:InvokeServer(319,data)
+	end
+end)
 
 Welcome:Show()
 Throwing:Show()
 MMain:Show()
 Annoyance:Show()
+Cloner:Show()
 library:FormatWindows()
